@@ -147,7 +147,7 @@
 					<p>DASHBOARD</p>
 					<h2>Hi, student@uni.edu</h2>
 				</div>
-				<i class="hgi hgi-stroke hgi-logout-circle-02 logo-keluar"></i>
+				<i onclick="logout()" class="hgi hgi-stroke hgi-logout-circle-02 logo-keluar"></i>
 			</div>
 			<div class="header">
 				<div class="form-header">
@@ -177,6 +177,9 @@
 
 		    let inTitle = document.getElementById("judul-catatan");
 		    let inContent = document.getElementById("konten-catatan");
+
+		    if(!inTitle.value) return alert("Judul tidak terisi!");
+		    if(!inContent.value) return alert("Catatan tidak terisi!");
 
 		    let date = new Date(); 
 			let dd = date.getDate(); 
@@ -222,6 +225,16 @@
 						</div>
 					</div>`
 			}
+
+			let inTitle = document.getElementById("judul-catatan");
+		    let inContent = document.getElementById("konten-catatan");
+		    inTitle.value = null;
+		    inContent.value = null;
+
+		}
+
+		function logout() {
+			 window.location.href = './index.html';
 		}
 	</script>
 
