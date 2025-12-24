@@ -174,7 +174,7 @@
 		let daftarCatatan = [];
 
 		function hapusCatatan(index) {
-			if(onEdit == index) return alert("Harap selesaikan edit");
+			if(sedangEdit) return alert("Harap selesaikan edit");
 			daftarCatatan.splice(index, 1)
 			tampilkanCatatan();
 		}
