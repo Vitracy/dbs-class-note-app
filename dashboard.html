@@ -124,7 +124,7 @@
 		    }
 		    .left-header-slot-one label{
 		    	color: #4E8B97;
-		    	font-size: 12pt;
+		    	font-size: 9pt;
 		    }
 		    .right-header-slot-one{
 		    	padding-right: 10px;
@@ -152,12 +152,12 @@
 			<div class="header">
 				<div class="form-header">
 					<i class="hgi hgi-stroke hgi-property-edit logo-create"></i>
-					<span>Create New Note</span>
+					<span id="span-create" >Create New Note</span>
 				</div>
 				<div class="input">
 					<input id="judul-catatan" type="text" placeholder="Note title" class="input-title">
 					<textarea id="konten-catatan" class="input-note" placeholder="Write your thoughts here..."></textarea>
-					<button onclick="tambahCatatan()" class="btn-add-note">+ Add Note</button>
+					<button id="btn-add" onclick="tambahCatatan()" class="btn-add-note">+ Add Note</button>
 				</div>
 			</div>
 			<div class="your-notes">
@@ -169,7 +169,32 @@
 		</div>
 
 	<script type="text/javascript">
+		let onEdit = null;
+		let sedangEdit = false;
 		let daftarCatatan = [];
+
+		function hapusCatatan(index) {
+			if(onEdit == index) return alert("Harap selesaikan edit");
+			daftarCatatan.splice(index, 1)
+			tampilkanCatatan();
+		}
+
+		function editCatatan(index) {
+			sedangEdit = true;
+			onEdit = index;
+
+			let btnAddNote = document.getElementById("btn-add");
+			let spanCreate = document.getElementById("span-create");
+
+			let inTitle = document.getElementById("judul-catatan");
+		    let inContent = document.getElementById("konten-catatan");
+
+		    inTitle.value = daftarCatatan[index].judul;
+		    inContent.value = daftarCatatan[index].konten;
+
+		    btnAddNote.innerText = 'Save';
+		    spanCreate.innerText = 'Editing note';
+		}
 
 		// function
 		function tambahCatatan() {
@@ -187,19 +212,41 @@
 			let yyyy = date.getFullYear(); 
 			let newDate = dd + "-" + mm + "-" +yyyy; 
       
-			// masukin ke array
-		    let newCatatan = {
-		        judul: inTitle.value,
-		        konten: inContent.value,
-		        tanggal: newDate
-		    }
+      		if(sedangEdit) {
+      			
+      			daftarCatatan[onEdit].judul = inTitle.value;
+      			daftarCatatan[onEdit].konten = inContent.value;
+      			daftarCatatan[onEdit].tanggal = newDate;
+				// panggill tampilkanCatatan
+				
 
-		    daftarCatatan.push(newCatatan);
+				alert("Catatan berhasil diubah!");
 
-			// panggill tampilkanCatatan
-			tampilkanCatatan();
 
-			alert("Catatan berhasil dibuat!");
+				let btnAddNote = document.getElementById("btn-add");
+				let spanCreate = document.getElementById("span-create");
+				btnAddNote.innerText = '+ Add Note';
+		   		spanCreate.innerText = 'Create New Note';
+		   		sedangEdit = false;
+		   		onEdit = null;
+		   		tampilkanCatatan();
+      		}
+      		else {
+      			// masukin ke array
+			    let newCatatan = {
+			        judul: inTitle.value,
+			        konten: inContent.value,
+			        tanggal: newDate
+			    }
+
+			    daftarCatatan.push(newCatatan);
+
+				// panggill tampilkanCatatan
+				tampilkanCatatan();
+
+				alert("Catatan berhasil dibuat!");
+      		}
+				
 		}
 
 		function tampilkanCatatan() {
@@ -215,9 +262,8 @@
 								<label>${daftarCatatan[i].tanggal}</label>
 							</div>
 							<div class="right-header-slot-one">
-								<i class="hgi hgi-stroke hgi-edit-02"> </i>
-								<i class="hgi hgi-stroke hgi-delete-03"></i>
-							
+								<i onclick="editCatatan(${i})" class="hgi hgi-stroke hgi-edit-02"> </i>
+								<i onclick="hapusCatatan(${i})" class="hgi hgi-stroke hgi-delete-03"></i>
 							</div>
 						</div>
 						<div class="text-slot-one">
@@ -226,11 +272,14 @@
 					</div>`
 			}
 
-			let inTitle = document.getElementById("judul-catatan");
-		    let inContent = document.getElementById("konten-catatan");
-		    inTitle.value = null;
-		    inContent.value = null;
-
+			if(!sedangEdit)
+			{
+				let inTitle = document.getElementById("judul-catatan");
+			    let inContent = document.getElementById("konten-catatan");
+			    inTitle.value = null;
+			    inContent.value = null;
+			}
+				
 		}
 
 		function logout() {
