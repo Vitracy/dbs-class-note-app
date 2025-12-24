@@ -45,6 +45,7 @@
 			.header{
 				background-color: white;
 				margin-top: 35px;
+				padding-bottom: 15px;
 			}
 			.form-header{
 				display: flex;
@@ -238,7 +239,6 @@
 			        konten: inContent.value,
 			        tanggal: newDate
 			    }
-
 			    daftarCatatan.push(newCatatan);
 
 				// panggill tampilkanCatatan
@@ -271,17 +271,14 @@
 						</div>
 					</div>`
 			}
-
 			if(!sedangEdit)
 			{
 				let inTitle = document.getElementById("judul-catatan");
 			    let inContent = document.getElementById("konten-catatan");
 			    inTitle.value = null;
 			    inContent.value = null;
-			}
-				
+			}	
 		}
-
 		function logout() {
 			 window.location.href = './index.html';
 		}
