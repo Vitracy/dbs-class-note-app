@@ -125,12 +125,12 @@
 
       if(!inEmail.value || !inPassword.value || !inConfirmPassword.value) return alert("Isi semua formulir!");
 
+      // melihat value dari object inEmail
+      //console.log(inEmail.value);
+      //console.log(inPassword.value);
+
       // memeriksa apakah password sama dengan yang dikonfirmasi
       if (inPassword.value != inConfirmPassword.value) return alert("Password tidak sesuai!");
-
-      // melihat value dari object inEmail
-      // console.log(inEmail.value);
-      // console.log(inPassword.value);
 
       let newUser = {
         email: inEmail.value,

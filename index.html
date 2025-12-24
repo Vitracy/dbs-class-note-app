@@ -131,16 +131,14 @@
 
       // apakah email & passwordnya sama dengan yang ada di local storage
       if (inEmail.value == userDb.email && inPassword.value == userDb.password) {
+        //login berhasil
         alert("Login berhasil!");
+        window.location.href = './dashboard.html';
       }
       else {
         alert("Email atau password salah!");
         return;
       }
-
-      //login berhasil
-      alert("Login berhasil!");
-      window.location.href = './dashboard.html';
     }
 
     function getFromStorage() {
