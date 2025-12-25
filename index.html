@@ -1,3 +1,4 @@
+<!-- Credit: faiz-dev, vitracy -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,12 +8,11 @@
   <title>Note Keep</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap"
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
   <style>
     body {
-      font-family: "Plus Jakarta Sans", sans-serif;
+      font-family: "Plus Jakarta Sans";
     }
 
     .container {
@@ -24,22 +24,45 @@
       text-align: center;
     }
 
-    .logo {
-      font-size: 20pt;
-      color: #19C3E6;
-      background-color: #E1F5F9;
-      padding: 10px;
-      border-radius: 8px;
-      display: inline-block;
+    button{
+      cursor: pointer;
     }
 
-    .judul {
+    button:hover{
+      opacity: 0.8;
+    }
+
+    input:hover{
+      border: 2px solid #7F7F7F;
+    }
+
+    a{
+      color: #19B9DA;
+      text-decoration: none;
+    }
+
+    a:hover
+    {
+      color: #4866FF;
+    }
+
+    .app-logo {
+      display: inline-block;
+      background-color: #E1F5F9;
+      border-radius: 8px;
+      padding: 10px;
+      font-size: 20pt;
+      color: #19C3E6;
+    }
+
+    .title {
       font-size: 24pt;
     }
 
-    .subjudul {
+    .sub-title {
       width: 269px;
       font-size: 12pt;
+      color:#4E8B97;
       margin: auto;
       margin-bottom: 30px;
     }
@@ -54,17 +77,16 @@
       margin-top: 15px;
     }
 
-    .input-style{
+    .input{
       padding: 10px;
       border-radius: 8px;
       border: 2px solid #C4C4C4;
       color: #7E7E7E;
     }
 
-    .forgot-password{
-      float: right;
-      color: #19B9DA;
-      text-decoration: none;
+    .password-label-align{
+      display: flex;
+      justify-content: space-between;
     }
 
     .btn-login {
@@ -79,9 +101,11 @@
       padding: 8px;
       border-radius: 5px;
     }
-    .hook-sign-up{
-      color: #19B9DA;
-      text-decoration: none;
+
+    #not-valid-password{
+      color: red;
+      font-size: 9pt;
+      display: none;
     }
   </style>
 
@@ -89,34 +113,37 @@
 
 <body>
 
-  <div class="container">
-    <i class="hgi hgi-stroke hgi-property-edit logo"></i>
-    <h1 class="judul">Note Keep</h1>
-    <p class="subjudul" style="color:#4E8B97">Enter your email and password to access your notes</p>
+  <form onsubmit="return login()">
+    <div class="container">
+      <i class="hgi hgi-stroke hgi-property-edit app-logo"></i>
+      <h1 class="title">Note Keep</h1>
+      <p class="sub-title">Enter your email and password to access your notes</p>
 
 
-    <!-- input email -->
-    <div class="input-group">
-      <label for="">Email Address</label>
-      <input class="input-style" id="input-email" type="email" placeholder="name@example.com">
-    </div>
-
-    <!-- input password -->
-    <div class="input-group">
-      <div>
-        <label for="">Password</label>
-        <a class="forgot-password" href="">Forgot password?</a>
+      <!-- input email -->
+      <div class="input-group">
+        <label for="">Email Address</label>
+        <input class="input" id="input-email" type="email" placeholder="name@example.com" required>
       </div>
-      <input class="input-style" id="input-password" type="password" placeholder="enter password">
+
+      <!-- input password -->
+      <div class="input-group">
+        <div class="password-label-align">
+          <label for="">Password</label>
+          <!-- <a href="">Forgot password?</a> -->
+        </div>
+        <input class="input" id="input-password" type="password" placeholder="enter password" required>
+        <span id="not-valid-password" >Invalid password!</span>
+      </div>
+
+      <button type="submit" class="btn-login">Log In</button>
+
+      <p style="color: #4E8B97;">
+        Don't have an account? <a href="./register.html">Sign up</a>
+      </p>
+
     </div>
-
-    <button class="btn-login" onclick="login()">Log In</button>
-
-    <p style="color: #4E8B97;">
-      Don't have an account? <a class="hook-sign-up" href="./register.html">Sign up</a>
-    </p>
-
-  </div>
+  </form>
 
   <script type="text/javascript">
     function login() {
@@ -124,21 +151,23 @@
       let inEmail = document.getElementById("input-email");
       let inPassword = document.getElementById("input-password");
       
-      if(!inEmail.value || !inPassword.value) return alert("Isi semua formulir!");
-
+      inPassword.oninput = function() {
+        document.getElementById("not-valid-password").style.display = "none";
+      }
+      
       // ambil data dari local storage
       let userDb = getFromStorage();
 
       // apakah email & passwordnya sama dengan yang ada di local storage
       if (inEmail.value == userDb.email && inPassword.value == userDb.password) {
         //login berhasil
-        alert("Login berhasil!");
         window.location.href = './dashboard.html';
       }
       else {
-        alert("Email atau password salah!");
-        return;
+        document.getElementById("not-valid-password").style.display = "block";
+        return false;
       }
+      return false;
     }
 
     function getFromStorage() {

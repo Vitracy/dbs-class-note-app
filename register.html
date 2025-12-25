@@ -1,3 +1,4 @@
+<!-- Credit: faiz-dev, vitracy -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,12 +8,11 @@
   <title>Note Keep</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap"
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
   <style>
     body {
-      font-family: "Plus Jakarta Sans", sans-serif;
+      font-family: "Plus Jakarta Sans";
     }
 
     .container {
@@ -22,6 +22,28 @@
       margin-left: auto;
       margin-right: auto;
       text-align: center;
+    }
+
+    button{
+      cursor: pointer;
+    }
+
+    button:hover{
+      opacity: 0.8;
+    }
+
+    input:hover{
+      border: 2px solid #7F7F7F;
+    }
+
+    a{
+      color: #19B9DA;
+      text-decoration: none;
+    }
+
+    a:hover
+    {
+      color: #4866FF;
     }
 
     .logo {
@@ -61,7 +83,7 @@
       color: #7E7E7E;
     }
 
-    .btn-register {
+    #btn-register {
       background-color: #19c3e6;
       color: white;
       font-weight: bold;
@@ -73,9 +95,12 @@
       padding: 8px;
       border-radius: 5px;
     }
-    .hook-log-in{
-      color: #19B9DA; text-decoration: none;
+    #not-confirmed-password{
+      color: red;
+      font-size: 9pt;
+      display: none;
     }
+  
 
   </style>
 
@@ -83,54 +108,69 @@
 
 <body>
 
-  <div class="container">
-    <i class="hgi hgi-stroke hgi-property-edit logo"></i>
-    <h1 class="judul">Get Started</h1>
-    <p class="subjudul" style="color:#4E8B97">Create a free account to save your notes and access them anywhere</p>
+  <form onsubmit="return tambahUser()">
+    <div class="container">
+      <i class="hgi hgi-stroke hgi-property-edit logo"></i>
+      <h1 class="judul">Get Started</h1>
+      <p class="subjudul" style="color:#4E8B97">Create a free account to save your notes and access them anywhere</p>
 
 
-    <!-- input email -->
-    <div class="input-group">
-      <label for="">Email Address</label>
-      <input class="input-style" id="input-email" type="email" placeholder="name@example.com">
+      <!-- input email -->
+      <div class="input-group">
+        <label for="">Email Address</label>
+        <input class="input-style" id="input-email" type="email" placeholder="name@example.com" required>
+      </div>
+
+      <!-- input password -->
+      <div class="input-group">
+        <label for="">Password</label>
+        <input class="input-style" id="input-password" type="password" placeholder="Enter password" required>
+      </div>
+
+      <div class="input-group">
+        <label for="">Confirm Password</label>
+        <input class="input-style" id="input-confirm-password" type="password" placeholder="Re-enter password" required>
+        <span id="not-confirmed-password" >Password does not match!</span>
+      </div>
+
+      <button type="submit" id="btn-register" >Register</button>
+
+      <p style="color: #4E8B97;">
+        Already have an account? <a href="./index.html">Log in</a>
+      </p>
+
     </div>
-
-    <!-- input password -->
-    <div class="input-group">
-      <label for="">Password</label>
-      <input class="input-style" id="input-password" type="password" placeholder="enter password">
-    </div>
-
-    <div class="input-group">
-      <label for="">Confirm Password</label>
-      <input class="input-style" id="input-confirm-password" type="password" placeholder="Re-enter password">
-    </div>
-
-    <button class="btn-register" onclick="tambahUser()">Register</button>
-
-    <p style="color: #4E8B97;">
-      Already have an account? <a class="hook-log-in" href="./index.html">Log in</a>
-    </p>
-
-  </div>
+  </form>
   <script type="text/javascript">
     // let users = [];
 
+    let inConfirmPassword = document.getElementById("input-confirm-password");
+    let inPassword = document.getElementById("input-password");
+    let btnRegister = document.getElementById("btn-register");
+
+    inConfirmPassword.oninput = function() {
+      if (inConfirmPassword.value && inPassword.value != inConfirmPassword.value) {
+        document.getElementById("not-confirmed-password").style.display = "block";
+        btnRegister.style.opacity = 0.5;
+      }
+      else {
+        document.getElementById("not-confirmed-password").style.display = "none";
+        btnRegister.style.opacity = 1;
+      }
+    }
+
     // function
     function tambahUser() {
+      if (inPassword.value != inConfirmPassword.value) return false;
       // mengenali elemen html
       let inEmail = document.getElementById("input-email");
-      let inPassword = document.getElementById("input-password");
-      let inConfirmPassword = document.getElementById("input-confirm-password");
-
-      if(!inEmail.value || !inPassword.value || !inConfirmPassword.value) return alert("Isi semua formulir!");
-
+      
       // melihat value dari object inEmail
       //console.log(inEmail.value);
       //console.log(inPassword.value);
 
       // memeriksa apakah password sama dengan yang dikonfirmasi
-      if (inPassword.value != inConfirmPassword.value) return alert("Password tidak sesuai!");
+      
 
       let newUser = {
         email: inEmail.value,
@@ -138,9 +178,9 @@
       }
       saveToStorage(newUser);
       // users.push(newUser);
-      alert("Registrasi berhasil!");
 
-      window.location.href = './index.html';
+      window.location.href = './dashboard.html';
+      return false;
     }
 
     function saveToStorage(dataUser) {
