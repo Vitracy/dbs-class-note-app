@@ -26,6 +26,7 @@
 				display: flex;
 				align-items: center;
 				justify-content: space-between;
+				margin-bottom: 10px;
 			}
 			.judul-teks{
 				font-weight: bold;
@@ -42,10 +43,35 @@
 			.logo-keluar{
 				font-size: 30px;
 			}
+			.logo-close-add
+			{
+				padding-right: 10px;
+				font-size: 20px;
+				display: none;
+			}
+			.logo-show-add
+			{
+				padding-right: 10px;
+				font-size: 25px;
+				display: block;
+			}
 			.header{
 				background-color: white;
-				margin-top: 35px;
+				padding-top: 15px;
 				padding-bottom: 15px;
+				margin-top: 10px;
+			}
+			.header-add-note{
+				background-color: white;
+				margin-top: 25px;
+				cursor: pointer;
+			}
+			.header-add-note:hover{
+				
+				border-radius: 8px;
+			}
+			.sub-header-add-note{
+				display: flex; align-items: center; justify-content: space-between;
 			}
 			.form-header{
 				display: flex;
@@ -59,6 +85,9 @@
 				font-size: 30px;
 				padding: 10px;
 				color: #19C3E6;
+			}
+			#span-create{
+				user-select: none;
 			}
 			.input{
 				margin-top: 10px;
@@ -86,6 +115,7 @@
 				color: #7E7E7E;
 				resize: vertical;
 			}
+
 			.btn-add-note {
 		      background-color: #19c3e6;
 		      color: white;
@@ -139,6 +169,50 @@
 		    	text-align: left;
 		    }
 		   
+		    /* Add Zoom Animation */
+			.animate {
+			  -webkit-animation: animatezoom 0.6s;
+			  animation: animatezoom 0.6s
+			}
+
+			@-webkit-keyframes animatezoom {
+			  from {-webkit-transform: translateY(-10px)} 
+			  to {-webkit-transform: translateY(0)}
+			}
+			  
+			@keyframes animatezoom {
+			  from {transform: translateY(-10px)} 
+			  to {transform: translateY(0)}
+			}
+
+			/*----------*/
+
+			.window-add-edit-note{
+				display: none;
+			}
+			
+			button{
+		      cursor: pointer;
+		    }
+
+		    button:hover{
+		      opacity: 0.8;
+		    }
+
+		    input:hover{
+		      border: 2px solid #7F7F7F;
+		    }
+		    i{
+		    	cursor: pointer;
+		    }
+
+		    .empty-notes-message{
+		    	text-align: center;
+		    	font-size: 11pt;
+		    	font-style: italic;
+		    	color: #00314D;
+		    	display: none;
+		    }
 		</style>
 	</head>
 	<body>
@@ -150,33 +224,74 @@
 				</div>
 				<i onclick="logout()" class="hgi hgi-stroke hgi-logout-circle-02 logo-keluar"></i>
 			</div>
-			<div class="header">
-				<div class="form-header">
-					<i class="hgi hgi-stroke hgi-property-edit logo-create"></i>
-					<span id="span-create" >Create New Note</span>
-				</div>
-				<div class="input">
-					<input id="judul-catatan" type="text" placeholder="Note title" class="input-title">
-					<textarea id="konten-catatan" class="input-note" placeholder="Write your thoughts here..."></textarea>
-					<button id="btn-add" onclick="tambahCatatan()" class="btn-add-note">+ Add Note</button>
+			<div class="header-add-note" onclick="toggleWindowAdd()">
+				<div class="sub-header-add-note">
+					<div class="form-header">
+						<i class="hgi hgi-stroke hgi-property-edit logo-create"></i>
+						<span id="span-create">Create New Note</span>
+					</div>
+					<i id="logo-close-add" class="hgi hgi-stroke hgi-cancel-01 logo-close-add"></i>
+					<i id="logo-show-add" class="hgi hgi-stroke hgi-arrow-down-03 logo-show-add"></i>
 				</div>
 			</div>
+			<div id="create-note" class="window-add-edit-note">
+				<form onsubmit="return tambahCatatan()" class="animate">
+					<div class="header">
+						<div class="input">
+							<input id="judul-catatan" type="text" placeholder="Note title" class="input-title" required>
+							<textarea id="konten-catatan" class="input-note" placeholder="Write your thoughts here..." required></textarea>
+							<button type="submit" id="btn-add" class="btn-add-note">+ Add Note</button>
+						</div>
+					</div>
+				</form>
+			</div>
+			
 			<div class="your-notes">
 				<h2>Your Notes</h2>
+				<div class="empty-notes-message" id="empty-notes-message">
+					<span>looks like you don't have any notes :(</span>
+				</div>
 				<div id="wadah">
 					
 				</div>		
 			</div>
 		</div>
+			
 
 	<script type="text/javascript">
 		let onEdit = null;
 		let sedangEdit = false;
 		let daftarCatatan = [];
 
+		var windowCreateNote = document.getElementById('create-note');
+		var logoCloseAdd = document.getElementById('logo-close-add');
+		var logoShowAdd = document.getElementById('logo-show-add');
+
+		// function	
+		function toggleWindowAdd() {
+			if(windowCreateNote.style.display != "block") {
+				showWindowAdd();
+			}
+			else {
+				hideWindowAdd();
+			}
+		}
+
+		function showWindowAdd() {
+			windowCreateNote.style.display = "block";
+			logoShowAdd.style.display = "none";
+			logoCloseAdd.style.display = "block";
+		}
+
+		function hideWindowAdd() {
+			windowCreateNote.style.display = "none";
+			logoCloseAdd.style.display = "none";
+			logoShowAdd.style.display = "block";
+		}
+
 		function hapusCatatan(index) {
 			if(sedangEdit) return alert("Harap selesaikan edit");
-			daftarCatatan.splice(index, 1)
+			daftarCatatan.splice(index, 1);
 			tampilkanCatatan();
 		}
 
@@ -195,17 +310,15 @@
 
 		    btnAddNote.innerText = 'Save';
 		    spanCreate.innerText = 'Editing note';
+
+		    showWindowAdd();
 		}
 
-		// function
 		function tambahCatatan() {
 			// ambil DOM
 
 		    let inTitle = document.getElementById("judul-catatan");
 		    let inContent = document.getElementById("konten-catatan");
-
-		    if(!inTitle.value) return alert("Judul tidak terisi!");
-		    if(!inContent.value) return alert("Catatan tidak terisi!");
 
 		    let date = new Date(); 
 			let dd = date.getDate(); 
@@ -217,8 +330,6 @@
       			daftarCatatan[onEdit].judul = inTitle.value;
       			daftarCatatan[onEdit].konten = inContent.value;
       			daftarCatatan[onEdit].tanggal = newDate;
-				
-				alert("Catatan berhasil diubah!");
 
 				let btnAddNote = document.getElementById("btn-add");
 				let spanCreate = document.getElementById("span-create");
@@ -239,18 +350,18 @@
 
 				// panggill tampilkanCatatan
 				tampilkanCatatan();
-
-				alert("Catatan berhasil dibuat!");
       		}
-				
+      		hideWindowAdd()
+			return false	
 		}
 
 		function tampilkanCatatan() {
 			//ambill DOM
-			let wadah = document.getElementById('wadah');
-
+			let count = 0;
+			let messageEmptyNotes = document.getElementById('empty-notes-message');
 			wadah.innerHTML = ``;
 			for(let i = 0; i < daftarCatatan.length; i++) {
+				count++;
 				wadah.innerHTML += `<div class="note-slot">
 						<div class="header-slot">
 							<div class="left-header-slot">
@@ -267,6 +378,11 @@
 						</div>
 					</div>`
 			}
+			messageEmptyNotes.style.display = "none";
+			if(count == 0)
+			{
+				messageEmptyNotes.style.display = "block";
+			}
 			if(!sedangEdit)
 			{
 				let inTitle = document.getElementById("judul-catatan");
@@ -278,6 +394,9 @@
 		function logout() {
 			window.location.href = './index.html';
 		}
+
+		document.addEventListener('DOMContentLoaded', tampilkanCatatan());
+		
 	</script>
 
 	</body>

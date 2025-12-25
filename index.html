@@ -107,6 +107,12 @@
       font-size: 9pt;
       display: none;
     }
+    #not-valid-email{
+      color: red;
+      font-size: 9pt;
+      display: none;
+    }
+
   </style>
 
 </head>
@@ -124,6 +130,7 @@
       <div class="input-group">
         <label for="">Email Address</label>
         <input class="input" id="input-email" type="email" placeholder="name@example.com" required>
+        <span id="not-valid-email" >Email is not registered!</span>
       </div>
 
       <!-- input password -->
@@ -154,9 +161,18 @@
       inPassword.oninput = function() {
         document.getElementById("not-valid-password").style.display = "none";
       }
+
+      inEmail.oninput = function() {
+        document.getElementById("not-valid-email").style.display = "none";
+      }
       
       // ambil data dari local storage
       let userDb = getFromStorage();
+
+      if(userDb == null) {
+        document.getElementById("not-valid-email").style.display = "block";
+        return false;
+      }
 
       // apakah email & passwordnya sama dengan yang ada di local storage
       if (inEmail.value == userDb.email && inPassword.value == userDb.password) {
