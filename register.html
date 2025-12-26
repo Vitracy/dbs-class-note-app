@@ -10,132 +10,40 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
-  <style>
-    body {
-      font-family: "Plus Jakarta Sans";
-    }
-
-    .container {
-      width: 390px;
-      /* background-color: antiquewhite; */
-      margin-top: 80px;
-      margin-left: auto;
-      margin-right: auto;
-      text-align: center;
-    }
-
-    button{
-      cursor: pointer;
-    }
-
-    button:hover{
-      opacity: 0.8;
-    }
-
-    input:hover{
-      border: 2px solid #7F7F7F;
-    }
-
-    a{
-      color: #19B9DA;
-      text-decoration: none;
-    }
-
-    a:hover
-    {
-      color: #4866FF;
-    }
-
-    .logo {
-      font-size: 20pt;
-      color: #19C3E6;
-      background-color: #E1F5F9;
-      padding: 10px;
-      border-radius: 8px;
-      display: inline-block;
-    }
-
-    .judul {
-      font-size: 24pt;
-    }
-
-    .subjudul {
-      width: 269px;
-      font-size: 12pt;
-      margin: auto;
-      margin-bottom: 30px;
-    }
-
-    .input-group{
-      display: flex;
-      flex-direction: column;
-      text-align: left;
-      gap: 5px;
-      width: 300px;
-      margin: auto;
-      margin-top: 15px;
-    }
-
-    .input-style{
-      padding: 10px;
-      border-radius: 8px;
-      border: 2px solid #C4C4C4;
-      color: #7E7E7E;
-    }
-
-    #btn-register {
-      background-color: #19c3e6;
-      color: white;
-      font-weight: bold;
-      border: none;
-      display: block;
-      width: 300px;
-      margin: auto;
-      margin-top: 20px;
-      padding: 8px;
-      border-radius: 5px;
-    }
-    #not-confirmed-password{
-      color: red;
-      font-size: 9pt;
-      display: none;
-    }
-  
-
-  </style>
-
+  <link rel="stylesheet" type="text/css" href="global.css">
 </head>
 
 <body>
 
   <form onsubmit="return tambahUser()">
     <div class="container">
-      <i class="hgi hgi-stroke hgi-property-edit logo"></i>
-      <h1 class="judul">Get Started</h1>
-      <p class="subjudul" style="color:#4E8B97">Create a free account to save your notes and access them anywhere</p>
+      <i class="hgi hgi-stroke hgi-property-edit app-logo"></i>
+      <h1 class="title">Get Started</h1>
+      <p class="sub-title">Create a free account to save your notes and access them anywhere</p>
 
 
       <!-- input email -->
       <div class="input-group">
         <label for="">Email Address</label>
-        <input class="input-style" id="input-email" type="email" placeholder="name@example.com" required>
+        <input class="input" id="input-email" type="email" placeholder="name@example.com" required>
       </div>
 
       <!-- input password -->
       <div class="input-group">
         <label for="">Password</label>
-        <input class="input-style" id="input-password" type="password" placeholder="Enter password" required>
+        <input class="input" id="input-password" type="password" placeholder="Enter password" required>
+        <span class="not-valid" id="not-valid-password" >Must be at least 6 characters!</span>
       </div>
 
       <div class="input-group">
         <label for="">Confirm Password</label>
-        <input class="input-style" id="input-confirm-password" type="password" placeholder="Re-enter password" required>
-        <span id="not-confirmed-password" >Password does not match!</span>
+        <input class="input" id="input-confirm-password" type="password" placeholder="Re-enter password" required>
+        <span class="not-valid" id="not-confirmed-password" >Password does not match!</span>
       </div>
 
-      <button type="submit" id="btn-register" >Register</button>
+      <button type="submit" class="btn-submit" id="btn-register" >Register</button>
 
-      <p style="color: #4E8B97;">
+      <p class="under-text">
         Already have an account? <a href="./index.html">Log in</a>
       </p>
 
@@ -157,6 +65,22 @@
         document.getElementById("not-confirmed-password").style.display = "none";
         btnRegister.style.opacity = 1;
       }
+    }
+
+    inPassword.oninput = function() {
+      if (inPassword.value && inPassword.value.length < 6) {
+        document.getElementById("not-valid-password").style.display = "block";
+        btnRegister.style.opacity = 0.5;
+      }
+      else {
+        document.getElementById("not-valid-password").style.display = "none";
+        btnRegister.style.opacity = 1;
+      }
+    }
+
+    function validatePassword(password) {
+      const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+      return passwordPattern.test(password);
     }
 
     // function

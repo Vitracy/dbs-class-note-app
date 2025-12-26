@@ -1,0 +1,121 @@
+/* global.css */
+
+body {
+  font-family: "Plus Jakarta Sans";
+  background-color: #F8FBFC;
+}
+
+.container {
+  width: 390px;
+  /*background-color: antiquewhite;*/
+  margin-top: 80px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+button{
+  cursor: pointer;
+}
+
+button:hover{
+  opacity: 0.8;
+}
+
+input:hover{
+  border: 2px solid #7F7F7F;
+}
+
+a{
+  color: #19B9DA;
+  text-decoration: none;
+}
+
+a:hover
+{
+  color: #4866FF;
+}
+
+.app-logo {
+  display: inline-block;
+  background-color: #E1F5F9;
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 20pt;
+  color: #19C3E6;
+}
+
+.title title{
+  font-size: 24pt;
+}
+
+.sub-title {
+  width: 269px;
+  font-size: 10pt;
+  color:#4E8B97;
+  margin: auto;
+  margin-bottom: 30px;
+  font-weight: bold;
+}
+
+.input-group{
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  gap: 5px;
+  width: 300px;
+  margin: auto;
+  margin-top: 15px;
+}
+
+.input-group label{
+	font-weight: bold;
+	font-size: 11pt;
+}
+
+.input{
+  padding: 10px;
+  border-radius: 8px;
+  border: 2px solid #C4C4C4;
+  color: #7E7E7E;
+}
+
+.btn-submit {
+  background-color: #19c3e6;
+  color: white;
+  font-weight: bold;
+  border: none;
+  display: block;
+  width: 300px;
+  margin: auto;
+  margin-top: 25px;
+  padding: 8px;
+  border-radius: 5px;
+  font-size: 12pt;
+}
+
+.not-valid{
+  color: red;
+  font-size: 9pt;
+  display: none;
+}
+
+.under-text{
+	margin-top: 20px;
+	color: #4E8B97;
+	font-weight: bold;
+	font-size: 11pt;
+}
+
+.forgot-pass{
+	font-size: 9pt;
+	color: #595959;
+	font-weight: bold;
+}
+
+.space-beetween
+{
+	justify-content: space-between;
+	display: flex;
+	align-items: center;
+}

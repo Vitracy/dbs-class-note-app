@@ -10,145 +10,34 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
-  <style>
-    body {
-      font-family: "Plus Jakarta Sans";
-    }
-
-    .container {
-      width: 390px;
-      /* background-color: antiquewhite; */
-      margin-top: 80px;
-      margin-left: auto;
-      margin-right: auto;
-      text-align: center;
-    }
-
-    button{
-      cursor: pointer;
-    }
-
-    button:hover{
-      opacity: 0.8;
-    }
-
-    input:hover{
-      border: 2px solid #7F7F7F;
-    }
-
-    a{
-      color: #19B9DA;
-      text-decoration: none;
-    }
-
-    a:hover
-    {
-      color: #4866FF;
-    }
-
-    .app-logo {
-      display: inline-block;
-      background-color: #E1F5F9;
-      border-radius: 8px;
-      padding: 10px;
-      font-size: 20pt;
-      color: #19C3E6;
-    }
-
-    .title {
-      font-size: 24pt;
-    }
-
-    .sub-title {
-      width: 269px;
-      font-size: 12pt;
-      color:#4E8B97;
-      margin: auto;
-      margin-bottom: 30px;
-    }
-
-    .input-group{
-      display: flex;
-      flex-direction: column;
-      text-align: left;
-      gap: 5px;
-      width: 300px;
-      margin: auto;
-      margin-top: 15px;
-    }
-
-    .input{
-      padding: 10px;
-      border-radius: 8px;
-      border: 2px solid #C4C4C4;
-      color: #7E7E7E;
-    }
-
-    .password-label-align{
-      display: flex;
-      justify-content: space-between;
-    }
-
-    .btn-login {
-      background-color: #19c3e6;
-      color: white;
-      font-weight: bold;
-      border: none;
-      display: block;
-      width: 300px;
-      margin: auto;
-      margin-top: 20px;
-      padding: 8px;
-      border-radius: 5px;
-    }
-
-    #not-valid-password{
-      color: red;
-      font-size: 9pt;
-      display: none;
-    }
-    #not-valid-email{
-      color: red;
-      font-size: 9pt;
-      display: none;
-    }
-
-  </style>
-
+  <link rel="stylesheet" type="text/css" href="global.css">
 </head>
 
 <body>
-
   <form onsubmit="return login()">
     <div class="container">
       <i class="hgi hgi-stroke hgi-property-edit app-logo"></i>
       <h1 class="title">Note Keep</h1>
       <p class="sub-title">Enter your email and password to access your notes</p>
-
-
       <!-- input email -->
       <div class="input-group">
         <label for="">Email Address</label>
         <input class="input" id="input-email" type="email" placeholder="name@example.com" required>
-        <span id="not-valid-email" >Email is not registered!</span>
+        <span class="not-valid" id="not-valid-email" >Email is not registered!</span>
       </div>
-
       <!-- input password -->
       <div class="input-group">
-        <div class="password-label-align">
+        <div class="space-beetween">
           <label for="">Password</label>
-          <!-- <a href="">Forgot password?</a> -->
+          <a class="forgot-pass" href="">Forgot password?</a>
         </div>
-        <input class="input" id="input-password" type="password" placeholder="enter password" required>
-        <span id="not-valid-password" >Invalid password!</span>
+        <input class="input" id="input-password" type="password" placeholder="Enter password" required>
+        <span class="not-valid" id="password-invalid" >Invalid password!</span>
       </div>
-
-      <button type="submit" class="btn-login">Log In</button>
-
-      <p style="color: #4E8B97;">
+      <button type="submit" class="btn-submit">Log In</button>
+      <p class="under-text">
         Don't have an account? <a href="./register.html">Sign up</a>
       </p>
-
     </div>
   </form>
 
@@ -159,7 +48,7 @@
       let inPassword = document.getElementById("input-password");
       
       inPassword.oninput = function() {
-        document.getElementById("not-valid-password").style.display = "none";
+        document.getElementById("password-invalid").style.display = "none";
       }
 
       inEmail.oninput = function() {
@@ -180,7 +69,7 @@
         window.location.href = './dashboard.html';
       }
       else {
-        document.getElementById("not-valid-password").style.display = "block";
+        document.getElementById("password-invalid").style.display = "block";
         return false;
       }
       return false;
