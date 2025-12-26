@@ -74,7 +74,7 @@
     }
 
     function isValidPassword(password) {
-      if (password != null)
+      if (!password)
       {
         // Validate lower case
         var lowerCaseLetters = /[a-z]/g;
@@ -129,7 +129,7 @@
           btnRegister.style.opacity = 0.5;
         }
 
-        else if (password != null)
+        else if (!password)
         {
           document.getElementById("not-valid-password").style.display = "none";
           btnRegister.style.opacity = 1;
