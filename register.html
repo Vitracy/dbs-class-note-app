@@ -101,6 +101,13 @@
         var upperCaseLetters = /[A-Z]/g;
         var numbers = /[0-9]/g;
 
+        if (!password)
+        {
+          document.getElementById("not-valid-password").style.display = "none";
+          btnRegister.style.opacity = 1;
+          return false;
+        }
+
         // Validate lower case
         if(!password.match(lowerCaseLetters)) {
           document.getElementById("not-valid-password").innerText = "Must be contain lowercase letter!";
@@ -127,12 +134,6 @@
           document.getElementById("not-valid-password").innerText = "Must be at least 6 characters!";
           document.getElementById("not-valid-password").style.display = "block";
           btnRegister.style.opacity = 0.5;
-        }
-
-        else if (!password)
-        {
-          document.getElementById("not-valid-password").style.display = "none";
-          btnRegister.style.opacity = 1;
         }
 
         else {
