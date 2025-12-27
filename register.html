@@ -110,7 +110,11 @@
     }
 
     function isValidPassword(password) {
+<<<<<<< HEAD
       if (password)
+=======
+      if (!password)
+>>>>>>> ddf94b49e64ea6487a406fa81c6e4ffe7bc9a091
       {
         // Validate lower case
         var lowerCaseLetters = /[a-z]/g;
@@ -137,6 +141,7 @@
         var upperCaseLetters = /[A-Z]/g;
         var numbers = /[0-9]/g;
 
+<<<<<<< HEAD
         if (password) {
           // Validate lower case
           if(!password.match(lowerCaseLetters)) {
@@ -151,6 +156,28 @@
             document.getElementById("not-valid-password").style.display = "block";
             btnRegister.style.opacity = 0.5;
           }
+=======
+        if (!password)
+        {
+          document.getElementById("not-valid-password").style.display = "none";
+          btnRegister.style.opacity = 1;
+          return false;
+        }
+
+        // Validate lower case
+        if(!password.match(lowerCaseLetters)) {
+          document.getElementById("not-valid-password").innerText = "Must be contain lowercase letter!";
+          document.getElementById("not-valid-password").style.display = "block";
+          btnRegister.style.opacity = 0.5;
+        }
+        
+        // Validate capital letters
+        else if(!password.match(upperCaseLetters)) {
+          document.getElementById("not-valid-password").innerText = "Must be contain capital (uppercase) letter!";
+          document.getElementById("not-valid-password").style.display = "block";
+          btnRegister.style.opacity = 0.5;
+        }
+>>>>>>> ddf94b49e64ea6487a406fa81c6e4ffe7bc9a091
 
           // Validate numbers
           else if(!password.match(numbers)) {
@@ -170,6 +197,17 @@
             btnRegister.style.opacity = 1;
           }
         }
+<<<<<<< HEAD
+=======
+        
+        // Validate length
+        else if(password.length < 6) {
+          document.getElementById("not-valid-password").innerText = "Must be at least 6 characters!";
+          document.getElementById("not-valid-password").style.display = "block";
+          btnRegister.style.opacity = 0.5;
+        }
+
+>>>>>>> ddf94b49e64ea6487a406fa81c6e4ffe7bc9a091
         else {
           document.getElementById("not-valid-password").style.display = "none";
           btnRegister.style.opacity = 1;
