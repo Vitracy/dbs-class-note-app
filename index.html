@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link rel="stylesheet" type="text/css" href="global.css">
 </head>
 
@@ -21,17 +22,22 @@
       <p class="sub-title">Enter your email and password to access your notes</p>
       <!-- input email -->
       <div class="input-group">
-        <label for="">Email Address</label>
+        <label for="input-email">Email Address</label>
         <input class="input" id="input-email" type="email" placeholder="name@example.com" required>
+        <i class="fa fa-envelope mail-icon" aria-hidden="true" onclick="document.getElementById('input-email').focus();"></i>
         <span class="not-valid" id="not-valid-email" >Email is not registered!</span>
       </div>
       <!-- input password -->
       <div class="input-group">
         <div class="space-beetween">
-          <label for="">Password</label>
+          <label for="input-password">Password</label>
           <a class="forgot-pass" href="">Forgot password?</a>
         </div>
+
+        
         <input class="input" id="input-password" type="password" placeholder="Enter password" required>
+        <i class="fa fa-eye-slash eye-icon" id="toggle-password" onclick="togglePassword()"></i>
+        
         <span class="not-valid" id="password-invalid" >Invalid password!</span>
       </div>
       <button type="submit" class="btn-submit">Log In</button>
@@ -42,10 +48,27 @@
   </form>
 
   <script type="text/javascript">
+    let inPassword = document.getElementById("input-password");
+
+    function togglePassword() {
+      let eyeIcon = document.getElementById("toggle-password");
+      if(inPassword.type == 'password') {
+        inPassword.type = 'text';
+        eyeIcon.classList.remove('fa-eye-slash');
+        eyeIcon.classList.add('fa-eye');
+        inPassword.focus();
+      }
+      else {
+        inPassword.type = 'password';
+        eyeIcon.classList.remove('fa-eye');
+        eyeIcon.classList.add('fa-eye-slash');
+      }
+    }
+
     function login() {
       // ambill elemen email dan password dari html
       let inEmail = document.getElementById("input-email");
-      let inPassword = document.getElementById("input-password");
+      
       
       inPassword.oninput = function() {
         document.getElementById("password-invalid").style.display = "none";
@@ -58,7 +81,7 @@
       // ambil data dari local storage
       let userDb = getFromStorage();
 
-      if(userDb == null) {
+      if(!userDb) {
         document.getElementById("not-valid-email").style.display = "block";
         return false;
       }

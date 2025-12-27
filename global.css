@@ -71,6 +71,7 @@ a:hover
 .input-group label{
 	font-weight: bold;
 	font-size: 11pt;
+	position: relative;
 }
 
 .input{
@@ -119,3 +120,27 @@ a:hover
 	display: flex;
 	align-items: center;
 }
+
+.eye-icon {
+  cursor: pointer;
+  color: #888;
+  position: absolute;
+ 	margin-left: 270px;
+ 	margin-top: 34px;
+  
+}
+
+.mail-icon {
+	cursor: pointer;
+  color: #888;
+  position: absolute;
+  margin-left: 272px;
+ 	margin-top: 34px;
+}
+
+.eye-icon:hover{
+  color: #333;
+}
+
+
+
